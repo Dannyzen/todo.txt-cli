@@ -30,6 +30,6 @@ h2. My Notes
 
 * Add "danny" remote to git config 
   [remote "danny"]
-  url = git@github.com:Dannyzen/dotfiles.git
+  url = git@github.com:Dannyzen/todo.txt-cli.git
   fetch = +refs/heads/*:refs/remotes/danny/*
 * $TODO env is private
