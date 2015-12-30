@@ -629,6 +629,15 @@ export PRI_X=$WHITE         # color unless explicitly defined
 export COLOR_PROJECT=$NONE
 export COLOR_CONTEXT=$NONE
 
+# Default color of dates
+export COLOR_DATE=$NONE
+
+# Default color of metadata 
+export COLOR_META=$NONE
+
+# Default color of line number
+export COLOR_NUMBER=$NONE
+
 # Default highlight colors.
 export COLOR_DONE=$LIGHT_GREY   # color for done (but not yet archived) tasks
 
@@ -746,6 +755,8 @@ if [ $TODOTXT_PLAIN = 1 ]; then
     COLOR_DONE=$NONE
     COLOR_PROJECT=$NONE
     COLOR_CONTEXT=$NONE
+    COLOR_DATE=$NONE
+    COLOR_META=$NONE
 fi
 
 [[ "$HIDE_PROJECTS_SUBSTITUTION" ]] && COLOR_PROJECT="$NONE"
@@ -909,21 +920,36 @@ _format()
                 }
                 end_clr = (clr ? highlight("DEFAULT") : "")
 
+                num_beg = highlight("COLOR_NUMBER")
+                num_end = (num_beg ? (highlight("DEFAULT") clr) : "")
+
                 prj_beg = highlight("COLOR_PROJECT")
                 prj_end = (prj_beg ? (highlight("DEFAULT") clr) : "")
 
                 ctx_beg = highlight("COLOR_CONTEXT")
                 ctx_end = (ctx_beg ? (highlight("DEFAULT") clr) : "")
 
+                dat_beg = highlight("COLOR_DATE")
+                dat_end = (dat_beg ? (highlight("DEFAULT") clr) : "")
+
+                met_beg = highlight("COLOR_META")
+                met_end = (met_beg ? (highlight("DEFAULT") clr) : "")
+
                 gsub(/[ \t][ \t]*/, "\n&\n")
                 len = split($0, words, /\n/)
 
                 printf "%s", clr
                 for (i = 1; i <= len; ++i) {
-                    if (words[i] ~ /^[+].*[A-Za-z0-9_]$/) {
+                    if (i == 1 && words[i] ~ /^[0-9]+$/ ) {
+                        printf "%s", num_beg words[i] num_end
+                    } else if (words[i] ~ /^[+].*[A-Za-z0-9_]$/) {
                         printf "%s", prj_beg words[i] prj_end
                     } else if (words[i] ~ /^[@].*[A-Za-z0-9_]$/) {
                         printf "%s", ctx_beg words[i] ctx_end
+                    } else if (words[i] ~ /^(19|20)[0-9]{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/) {
+                        printf "%s", dat_beg words[i] dat_end
+                    } else if (words[i] ~ /^[[:alnum:]]+:[^ ]+$/) {
+                        printf "%s", met_beg words[i] met_end
                     } else {
                         printf "%s", words[i]
                     }
