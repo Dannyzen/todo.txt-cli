@@ -143,7 +143,7 @@ help()
 		    TODOTXT_FORCE=1                 is same as option -f
 		    TODOTXT_PRESERVE_LINE_NUMBERS   is same as option -n (0)/-N (1)
 		    TODOTXT_PLAIN                   is same as option -p (1)/-c (0)
-		    TODOTXT_DATE_ON_ADD             is same as option -t (1)/-T (0)
+		    TODOTXT_DATE_ON_ADD=1           is same as option -t (1)/-T (0)
 		    TODOTXT_VERBOSE=1               is same as option -v
 		    TODOTXT_DISABLE_FILTER=1        is same as option -x
 		    TODOTXT_DEFAULT_ACTION=""       run this when called with no arguments
